@@ -1,18 +1,21 @@
-function update{
-  apt-get update
-  apt-get upgrade
-}
-function install_basic_utils{
+#!/bin/bash
 
+function update {
+  apt-get update && apt-get upgrade
 }
-function install_alfa_drivers{
+
+function install_basic_utils {
+  echo ""
+}
+
+function install_alfa_drivers {
   apt-get remove realtek-rtl88xxau-dkms
   apt-get purge realtek-rtl88xxau-dkms
   apt-get install realtek-rtl88xxau-dkms
 }
 
 
-function install_setup_hostapd_wpe{
+function install_setup_hostapd_wpe {
   apt-get install libssl-dev libnl-genl-3-dev
   git clone https://github.com/OpenSecurityResearch/hostapd-wpe
   wget http://hostap.epitest.fi/releases/hostapd-2.6.tar.gz
@@ -20,7 +23,6 @@ function install_setup_hostapd_wpe{
   cd hostapd-2.6
   patch -p1 < ../hostapd-wpe/hostapd-wpe.patch 
   cd hostapd
-  CONFIG_LIBNL32=y
   make
   cd ../../hostapd-wpe/certs
   ./bootstrap
