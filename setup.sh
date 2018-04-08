@@ -4,9 +4,6 @@ function update {
   apt-get update && apt-get upgrade
 }
 
-function install_basic_utils {
-  echo ""
-}
 
 function install_alfa_drivers {
   apt-get remove realtek-rtl88xxau-dkms
@@ -30,7 +27,14 @@ function install_setup_hostapd_wpe {
   sudo ./hostapd-wpe hostapd-wpe.conf
 }
 
-update
-install_basic_utils
-install_setup_hostapd_wpe
 
+function setup_sshd {
+  echo "Setting up SSH Daemon"
+  apt-get install openssh-server
+  printf "PubkeyAuthentication yes \nPasswordAuthentication no " >> ./etc/ssh/sshd_config
+}
+
+
+update
+install_setup_hostapd_wpe
+setup_sshd
